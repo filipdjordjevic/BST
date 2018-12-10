@@ -7,13 +7,6 @@ BinaryTree::BinaryTree()
  root=NULL;
 }
 
-BinaryTree::BinaryTree(int value)
-{
-  root=new Node;
-  root->value=value;
-  root->left=root->right=NULL;
-}
-
 
 void BinaryTree::insert(Node* node,int value)
 {
@@ -90,6 +83,28 @@ void BinaryTree::remove(int value)
   root=remove(root,value);
 }
 
+Node* BinaryTree::cut(Node* node,int value)
+{
+  if(node==NULL) return NULL;
+  if(value<node->value)
+    node->left=cut(node->left,value);
+  else if(value>node->value)
+    node->right=cut(node->right,value);
+  else
+  {
+    delete node;
+    return NULL;
+  }
+}
+
+void BinaryTree::cut(int value)
+{
+
+  root=cut(root,value);
+
+}
+
+
 void BinaryTree::printPostorder(Node* node)
 {
   if(node==NULL) return;
@@ -97,6 +112,7 @@ void BinaryTree::printPostorder(Node* node)
   printPostorder(node->right);
   printf("%d ",node->value);
 }
+
 
 void BinaryTree::printPostorder()
 {
@@ -166,4 +182,30 @@ Node* BinaryTree::search(Node* node,int value)
 int BinaryTree::search(int value)
 {
   return search(root,value)->value;
+}
+
+void BinaryTree::toArray(Node* node,std::vector<Node*> *array)
+{
+  if(node==NULL) return;
+  toArray(node->left,array);
+  (*array).push_back(node);
+  toArray(node->right,array);
+}
+
+Node* BinaryTree::arrayToBST(std::vector<Node*> *array,int low,int high)
+{
+  if(low>high) return NULL;
+  int mid=(low+high)/2;
+  Node *temp=(*array).at(mid);
+  temp->left=arrayToBST(array,low,mid-1);
+  temp->right=arrayToBST(array,mid+1,high);
+  return temp;
+
+}
+
+void BinaryTree::balance()
+{
+  std::vector<Node*> array;
+  toArray(root,&array);
+  root=arrayToBST(&array,0,array.size()-1);
 }

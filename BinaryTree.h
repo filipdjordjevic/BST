@@ -1,9 +1,11 @@
 #ifndef BINARY_TREE
 #define BINARY_TREE
+#include <vector>
 
 typedef struct node
 {
   int value;
+
   struct node *left,*right;
 }Node;
 
@@ -11,25 +13,30 @@ typedef struct node
 class BinaryTree
 {
   Node *root;
+
+  void insert(Node*,int);
+  Node* remove(Node*,int value);
+  Node* cut(Node*,int);
+  void printPostorder(Node*);
+  void printInorder(Node*);
+  void printPreorder(Node*);
+  Node* searchMin(Node*);
+  Node* searchMax(Node*);
+  Node* search(Node*,int value);
+  void toArray(Node*,std::vector<Node*>*);
+  Node* arrayToBST(std::vector<Node*>*,int,int);
 public:
   BinaryTree();
-  BinaryTree(int);
-  void insert(int value);
-  void insert(Node*,int value);
+  void insert(int);
   void remove(int value);
-  Node* remove(Node*,int value);
+  void cut(int value);
   void printPostorder();
-  void printPostorder(Node*);
   void printInorder();
-  void printInorder(Node*);
   void printPreorder();
-  void printPreorder(Node*);
+  void balance();
   int searchMin();
-  Node* searchMin(Node*);
   int searchMax();
-  Node* searchMax(Node*);
   int search(int);
-  Node* search(Node*,int value);
 
 };
 
