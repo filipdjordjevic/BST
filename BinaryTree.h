@@ -6,15 +6,19 @@ typedef struct node
 {
   int value;
 
+  char name[30];
+  int stat[3];
   struct node *left,*right;
 }Node;
+
 
 
 class BinaryTree
 {
   Node *root;
 
-  void insert(Node*,int);
+
+  void insert(Node*,Node*);
   Node* remove(Node*,int value);
   Node* cut(Node*,int);
   void printPostorder(Node*);
@@ -27,9 +31,10 @@ class BinaryTree
   Node* arrayToBST(std::vector<Node*>*,int,int);
 public:
   BinaryTree();
-  void insert(int);
+  void insert(Node*);
   void remove(int value);
   void cut(int value);
+  void read(int value);
   void printPostorder();
   void printInorder();
   void printPreorder();

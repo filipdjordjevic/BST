@@ -1,7 +1,7 @@
 #include "BinaryTree.h"
 #include <iostream>
 #include <stdlib.h>
-#include <time.h>
+#include <chrono>
 #include <string.h>
 #include <sstream>
 #include <fstream>
@@ -11,9 +11,9 @@ main()
   BinaryTree Tree;
   std::string input,command;
   int value,result;
-  double time;
-  clock_t start,finish;
+  std::chrono::duration<double> time;
   std::fstream file;
+  Node *newNode=new Node;
 
   file.open("dat.txt");
    if (!file)
@@ -21,9 +21,13 @@ main()
     std::cout << "Unable to open file";
     exit(1);
    }
-  while(file>>value)
+  while(file>>newNode->value)
   {
-    Tree.insert(value);
+    file>>newNode->name;
+    file>>newNode->stat[0];
+    file>>newNode->stat[1];
+    file>>newNode->stat[2];
+    Tree.insert(newNode);
   }
   file.close();
 
@@ -37,7 +41,7 @@ while(1)
   Tree.printInorder();
   std::cout<<"\nPostorder: ";
   Tree.printPostorder();
-  std::cout<<"\nLast command execution time: "<<std::fixed<<time;
+  std::cout<<"\nLast command execution time: "<<time.count();
   std::cout<<"         Result: "<<result;
   std::cout<<"\nType cmd:";
   std::getline(std::cin,input);
@@ -47,52 +51,67 @@ while(1)
   inStream >> value;
   if(command.compare("insert")==0)
     {
-      start=clock();
-      Tree.insert(value);
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      newNode->value=value;
+      std::cout<<"\nName:";
+      std::cin>>newNode->name;
+      getchar();
+      std::cout<<"\nStats str dex int:";
+      std::getline(std::cin,input);
+      std::istringstream inStream(input);
+      inStream>>newNode->stat[0];
+      inStream>>newNode->stat[1];
+      inStream>>newNode->stat[2];
+      auto  start=std::chrono::high_resolution_clock::now();
+      Tree.insert(newNode);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
     }
   if(command.compare("delete")==0)
     {
-      start=clock();
+      auto  start=std::chrono::high_resolution_clock::now();
       Tree.remove(value);
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
     }
   if(command.compare("cut")==0)
     {
-      start=clock();
+      auto  start=std::chrono::high_resolution_clock::now();
       Tree.cut(value);
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
+    }
+  if(command.compare("read")==0)
+    {
+      Tree.read(value);
+      getchar();
     }
   if(command.compare("balance")==0)
     {
-      start=clock();
+      auto  start=std::chrono::high_resolution_clock::now();
       Tree.balance();
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
     }
   if(command.compare("searchMin")==0)
     {
-      start=clock();
+      auto  start=std::chrono::high_resolution_clock::now();
       result=Tree.searchMin();
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
     }
   if(command.compare("searchMax")==0)
     {
-      start=clock();
+      auto  start=std::chrono::high_resolution_clock::now();
       result=Tree.searchMax();
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
     }
   if(command.compare("search")==0)
     {
-      start=clock();
+      auto  start=std::chrono::high_resolution_clock::now();
       result=Tree.search(value);
-      finish=clock();
-      time=(double)((start-finish)/CLOCKS_PER_SEC);
+      auto  finish=std::chrono::high_resolution_clock::now();
+      time=start-finish;
     }
   if(command.compare("exit")==0) break;
 
