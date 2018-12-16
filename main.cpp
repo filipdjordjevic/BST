@@ -64,21 +64,21 @@ while(1)
       auto  start=std::chrono::high_resolution_clock::now();
       Tree.insert(newNode);
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("delete")==0)
     {
       auto  start=std::chrono::high_resolution_clock::now();
       Tree.remove(value);
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("cut")==0)
     {
       auto  start=std::chrono::high_resolution_clock::now();
       Tree.cut(value);
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("read")==0)
     {
@@ -90,28 +90,28 @@ while(1)
       auto  start=std::chrono::high_resolution_clock::now();
       Tree.balance();
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("searchMin")==0)
     {
       auto  start=std::chrono::high_resolution_clock::now();
       result=Tree.searchMin();
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("searchMax")==0)
     {
       auto  start=std::chrono::high_resolution_clock::now();
       result=Tree.searchMax();
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("search")==0)
     {
       auto  start=std::chrono::high_resolution_clock::now();
       result=Tree.search(value);
       auto  finish=std::chrono::high_resolution_clock::now();
-      time=start-finish;
+      time=finish-start;
     }
   if(command.compare("exit")==0) break;
 
